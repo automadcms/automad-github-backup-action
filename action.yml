@@ -33,6 +33,7 @@ runs:
       with:
         token: ${{ env.GITHUB_TOKEN }}
     - name: Setup SSH
+      shell: bash
       run: |
         mkdir -p ~/.ssh/
         echo "${{ inputs.ssh_key_private }}" > ~/.ssh/id_rsa
@@ -41,6 +42,7 @@ runs:
         chmod 600 ~/.ssh/id_rsa.pub
         ssh-keyscan -H ${{ inputs.ssh_host }} >> ~/.ssh/known_hosts
     - name: Rsync
+      shell: bash
       run: bash ./backup.sh
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
