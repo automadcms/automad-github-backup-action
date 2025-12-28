@@ -1,0 +1,47 @@
+name: Automad GitHub Backup
+description: Create Automad backups to a GitHub repository using rsync over SSH
+
+inputs:
+  ssh_key_private:
+    description: The private SSH key
+    required: true
+  ssh_key_public:
+    description: The public SSH key
+    required: true
+  ssh_user:
+    description: The SSH user
+    required: true
+  ssh_host:
+    description: SSH host
+    required: true
+  docroot:
+    description: The document root for the Automad installation
+    required: true
+  branch:
+    description: The target branch inside the repository
+    required: false
+    default: master
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        token: ${{ env.GITHUB_TOKEN }}
+    - name: Setup SSH
+      run: |
+        mkdir -p ~/.ssh/
+        echo "${{ inputs.ssh_key_private }}" > ~/.ssh/id_rsa
+        echo "${{ inputs.ssh_key_public }}" > ~/.ssh/id_rsa.pub
+        chmod 600 ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa.pub
+        ssh-keyscan -H ${{ inputs.ssh_host }} >> ~/.ssh/known_hosts
+    - name: Rsync
+      run: bash ./backup.sh
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SSH_USER: ${{ inputs.ssh_user }}
+        SSH_HOST: ${{ inputs.ssh_host }}
+        DOCROOT: ${{ inputs.docroot }}
+        BRANCH: ${{ inputs.branch }}
