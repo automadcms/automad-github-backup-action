@@ -1,5 +1,9 @@
 name: Automad GitHub Backup
 description: Create Automad backups to a GitHub repository using rsync over SSH
+author: "marcantondahmen"
+branding:
+  icon: "archive"
+  color: "black"
 
 inputs:
   token:
