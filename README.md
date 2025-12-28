@@ -1,10 +1,14 @@
 # Automad GitHub Backup Action
 
-Create Automad backups to a GitHub repository using rsync over SSH.
+[Automad](https://automad.org) is a flat-file CMS — everything lives in files, no database fuss. That means backing up your whole site is super easy, and pushing it to a Git repository is one of the best perks. This GitHub Action makes it effortless: set it up once, and your site is safely backed up to GitHub automatically.
 
-## Usage
+## What You’ll Need
 
-In order to enable scheduled backups of an Automad site to a GitHub repository, add the following workflow to an empty repository in `./github/workflows/backup.yml`.
+Before you get started, make sure you have a few things ready. You’ll need a shared hosting or VPS environment that supports SSH with key-based authentication. You’ll also need a private/public SSH key pair, which you can generate on any Unix-like machine using ssh-keygen, and the public key must be installed on your host so the action can connect securely.
+
+## How to Use It
+
+Getting started is easy. First, create a fresh GitHub repository where your backup will be stored. Then, add a GitHub workflow file to that repository, for example `./github/workflows/backup.yml`, and paste the following content:
 
 ```yml
 name: GitHub Backup
@@ -30,7 +34,7 @@ jobs:
           branch: master
 ```
 
-With workflow, the backup runs weekly on sundays at 4:00h. Note that for the example above, you also have to add the following secrets and variables in the repository settings:
+Next, configure the repository secrets and variables exactly as referenced in your workflow file.
 
 | Name              | Type     | Description                                           |
 | ----------------- | -------- | ----------------------------------------------------- |
@@ -40,6 +44,7 @@ With workflow, the backup runs weekly on sundays at 4:00h. Note that for the exa
 | `SSH_HOST`        | variable | The target machine where Automad is installed         |
 | `DOCROOT`         | variable | The path to the installation on the target machine    |
 
-### About SSH Keys
+> [!NOTE]
+> The workflow runs on a schedule, which you can configure directly in the YAML file. In the example, it’s set to run every Sunday at 4:00 AM, but you can adjust it to fit your own backup routine.
 
-This action authenticates to the host machine via SSH using a private/public key pair. You can generate such a key on any Linux or macOS machine.
+Once everything is set up, your Automad site will automatically back up to GitHub, giving you one less thing to worry about while you focus on building your site.
