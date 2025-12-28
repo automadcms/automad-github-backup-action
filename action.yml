@@ -2,6 +2,9 @@ name: Automad GitHub Backup
 description: Create Automad backups to a GitHub repository using rsync over SSH
 
 inputs:
+  token:
+    description: The GitHub token
+    required: true
   ssh_key_private:
     description: The private SSH key
     required: true
@@ -40,7 +43,7 @@ runs:
     - name: Rsync
       run: bash ./backup.sh
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ inputs.token }}
         SSH_USER: ${{ inputs.ssh_user }}
         SSH_HOST: ${{ inputs.ssh_host }}
         DOCROOT: ${{ inputs.docroot }}
