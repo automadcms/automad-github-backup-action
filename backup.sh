@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -eux
+set -eu
 
 if [ -z ${SSH_HOST} ]; then
 	echo "SSH_HOST is not set. Skipping workflow ..."
