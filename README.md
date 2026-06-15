@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Backup Action
-        uses: automadcms/automad-github-backup-action@1.0.0
+        uses: automadcms/automad-github-backup-action@master
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           ssh_key_private: ${{ secrets.SSH_KEY_PRIVATE }}
