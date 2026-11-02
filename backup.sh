@@ -16,7 +16,7 @@ if [ -z "${DOCROOT}" ]; then
 fi
 
 echo '----------------------------------'
-echo "${DOCROOT} > ${BRANCH}"
+echo "${DOCROOT} > $(git rev-parse --abbrev-ref HEAD)"
 
 rsync -a --stats \
 	--delete \
@@ -53,4 +53,4 @@ fi
 
 echo '----------------------------------'
 
-git push origin
+git push origin HEAD

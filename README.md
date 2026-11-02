@@ -31,7 +31,6 @@ jobs:
           ssh_user: ${{ secrets.SSH_USER }}
           ssh_host: ${{ vars.SSH_HOST }}
           docroot: ${{ vars.DOCROOT }}
-          branch: master
 ```
 
 Next, configure the repository secrets and variables exactly as referenced in your workflow file.
@@ -43,6 +42,8 @@ Next, configure the repository secrets and variables exactly as referenced in yo
 | `SSH_USER`        | secret   | The SSH username                                      |
 | `SSH_HOST`        | variable | The target machine where Automad is installed         |
 | `DOCROOT`         | variable | The path to the installation on the target machine    |
+
+By default, backups are committed to the repository's default branch. To use a different branch, add the optional `branch` input to the `with` section, for example `branch: backup`. That branch must already exist in the repository before the first run.
 
 > [!NOTE]
 > The workflow runs on a schedule, which you can configure directly in the YAML file. In the example, it’s set to run every Sunday at 4:00 AM, but you can adjust it to fit your own backup routine.

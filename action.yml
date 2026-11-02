@@ -25,9 +25,9 @@ inputs:
     description: The document root for the Automad installation
     required: true
   branch:
-    description: The target branch inside the repository
+    description: The target branch inside the repository. The branch must already exist. Defaults to the branch the workflow runs on.
     required: false
-    default: master
+    default: ""
 
 runs:
   using: composite
@@ -36,6 +36,7 @@ runs:
       uses: actions/checkout@v6
       with:
         token: ${{ inputs.token }}
+        ref: ${{ inputs.branch }}
     - name: Setup SSH
       shell: bash
       run: |
@@ -52,4 +53,3 @@ runs:
         SSH_USER: ${{ inputs.ssh_user }}
         SSH_HOST: ${{ inputs.ssh_host }}
         DOCROOT: ${{ inputs.docroot }}
-        BRANCH: ${{ inputs.branch }}
